@@ -77,23 +77,15 @@ void print_path(int prim[][8])
 }
 
 
-/*kruskal 전용 함수들*/
-// 1. kruskal 알고리즘에서 minimum 배열 999로 리셋해주는 함수. (매 for문 마다 최솟값 구할 때 사용)
+/*Prim 전용 함수들*/
+// 1.Prim 알고리즘에서 minimum 배열 999로 리셋해주는 함수. (매 for문 마다 최솟값 구할 때 사용)
 void minimum_value_set(int array[])
 {
 	for (int i = 0; i < 8; i++)
 		array[i] = 999;
 }
 
-// 2. kruskal 함수 설정
-void kruscal_edge_set(int kruskal[], int num)
-{
-	for (int i = 0; i < num; i++)
-		kruskal[i] = 999;
-}
-
-
-// 3. 해당 행에서 가장 작은 값 구하기.
+// 2. 해당 행에서 가장 작은 값 구하기.
 int minimum_row(int origin[][8], int row, int next_small)
 {
 	int min_value = origin[row][row];
@@ -103,7 +95,7 @@ int minimum_row(int origin[][8], int row, int next_small)
 	return min_value;
 }
 
-// 4. small_value 보다는 크면서 다음으로 작은 값 리턴.
+// 3. small_value 보다는 크면서 다음으로 작은 값 리턴.
 int find_minIndex(int origin[][8], int row, int small_value)
 {
 	for (int i = 0; i < 8; i++)
@@ -114,7 +106,7 @@ int find_minIndex(int origin[][8], int row, int small_value)
 	return NULL;
 }
 
-// 5. check2 (앞의 합집합 알고리즘이 다 해결해주긴 하지만, 비상용 알고리즘)
+// 4. check2 (앞의 합집합 알고리즘이 다 해결해주긴 하지만, 비상용 알고리즘)
 int queue_check(int queue[], int value)
 {
 	for (int i = 0; i < 8; i++)
@@ -125,7 +117,7 @@ int queue_check(int queue[], int value)
 	return 0;
 }
 
-// 6. while문을 디버깅하는데 시간이 많이 걸려서 제작
+// 5. while문을 디버깅하는데 시간이 많이 걸려서 제작
 int debug_prim_while(int origin[][8], int prim[][8], int minimum_value[], int prim_queue[], int cycle_judge[], int start, int queue_count)
 {
 	int minimum = 999;
@@ -191,7 +183,7 @@ void prim_algorithm(int origin[][8], int prim[][8])
 	}
 }
 
-
+//
 
 
 
@@ -215,7 +207,14 @@ void swap_array(int arr1[], int i, int arr2[], int j)
 	arr2[j] = temp;
 }
 
-//2_1. quickSort 호출 함수
+// 2. kruskal 함수 설정
+void kruscal_edge_set(int kruskal[], int num)
+{
+	for (int i = 0; i < num; i++)
+		kruskal[i] = 999;
+}
+
+//3_1. quickSort 호출 함수
 int partition(int copy_array[], int row[], int col[], int left, int right)
 {
 	int pivot = copy_array[left];
@@ -248,7 +247,7 @@ int partition(int copy_array[], int row[], int col[], int left, int right)
 	return high;
 }
 
-//2_2. quick Sort 정렬 함수
+//3_2. quick Sort 정렬 함수
 void quick_sort(int copy_array[], int row[], int col[], int left, int right)
 {
 	if (left <= right)
@@ -260,7 +259,7 @@ void quick_sort(int copy_array[], int row[], int col[], int left, int right)
 }
 
 
-// 3. node 정렬 함수 ( kruskal 값들 정렬, 행정렬 , 열정렬) 
+// 4. node 정렬 함수 ( kruskal 값들 정렬, 행정렬 , 열정렬) 
 void node_sort(int origin[][8], int kruskal[][8], int kruskal_row[], int kruskal_col[], int kruskal_value[])
 {
 	int count = 0;
@@ -305,7 +304,7 @@ int kruskal_algorithm(int origin[][8], int kruskal[][8], int kruskal_row[], int 
 		int row = kruskal_row[index];
 		int col = kruskal_col[index];
 		int val = kruskal_value[index];
-		int check_kruskal = findParent(cycle_judge_2,row , col);
+		int check_kruskal = findParent(cycle_judge_2, row, col);
 		if (check_kruskal == 0)
 		{
 			unionParent(cycle_judge_2, kruskal_row[index], kruskal_col[index]);
@@ -363,7 +362,7 @@ int main()
 	};
 	/* 2. Prim Algorithm Array Set*/
 	int prim[8][8] = { 0, };
-	
+
 	/* 3. kruscal Algorithm Array Set*/
 	int kruskal_row[14] = { 0, };
 	int kruskal_col[14] = { 0, };
@@ -371,7 +370,7 @@ int main()
 	int kruskal[8][8];
 
 	/*Main Execution*/
-	execution_prim(origin , prim);
+	execution_prim(origin, prim);
 	execution_kruskal(origin, kruskal, kruskal_row, kruskal_col, kruskal_value);
 	return 0;
 }
